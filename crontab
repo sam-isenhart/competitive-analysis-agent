@@ -1,0 +1,4 @@
+# Competitive Intelligence pipeline — run daily at 7 AM
+# Install: crontab crontab
+# Or with Docker: 0 7 * * * cd /opt/competitive-intel && docker compose run --rm agent >> /var/log/competitive-intel.log 2>&1
+0 7 * * * cd /path/to/project && python -m competitive_intel.main >> /var/log/competitive-intel.log 2>&1

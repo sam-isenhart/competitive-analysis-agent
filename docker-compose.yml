@@ -1,0 +1,33 @@
+version: "3.8"
+
+# LangGraph pipeline: postgres (optional checkpointer) + agent.
+# Run daily via cron: docker compose run --rm agent
+
+volumes:
+  postgres_data:
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: langgraph
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-langgraph}
+      POSTGRES_DB: checkpoints
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U langgraph"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  agent:
+    build: .
+    env_file: .env
+    volumes:
+      - ./files:/app/files
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://langgraph:${POSTGRES_PASSWORD:-langgraph}@postgres:5432/checkpoints
