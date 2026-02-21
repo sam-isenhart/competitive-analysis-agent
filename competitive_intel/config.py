@@ -64,7 +64,6 @@ NOTION_DATABASE_ID = os.environ.get("NOTION_DATABASE_ID", "")
 
 # ── Tools (optional) ───────────────────────────────────────────────────────
 TAVILY_API_KEY = os.environ.get("TAVILY_API_KEY", "")
-NEWS_API_KEY = os.environ.get("NEWS_API_KEY", "")
 PERPLEXITY_API_KEY = os.environ.get("PERPLEXITY_API_KEY", "")
 
 # ── Paths ───────────────────────────────────────────────────────────────────
